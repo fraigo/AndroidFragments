@@ -1,4 +1,4 @@
-package com.example.francisco.androidfragmentrecycleview;
+package com.example.francisco.androidfragmentrecycleview.models;
 
 import java.text.DateFormat;
 import java.util.Calendar;

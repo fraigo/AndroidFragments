@@ -1,4 +1,4 @@
-package com.example.francisco.androidfragmentrecycleview;
+package com.example.francisco.androidfragmentrecycleview.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +13,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.example.francisco.androidfragmentrecycleview.models.Item;
+import com.example.francisco.androidfragmentrecycleview.R;
+
 /**
  * Created by francisco on 2018-05-28.
  */
 
-public class ItemFragment extends Fragment {
+public class DetailFragment extends Fragment {
 
     private Item mItem;
     private EditText mItemData;

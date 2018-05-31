@@ -1,15 +1,12 @@
-package com.example.francisco.androidfragmentrecycleview;
+package com.example.francisco.androidfragmentrecycleview.activities;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.francisco.androidfragmentrecycleview.fragments.DetailFragment;
+import com.example.francisco.androidfragmentrecycleview.R;
 
 public class MainActivity extends FragmentActivity {
 
@@ -17,19 +14,22 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        insertFragment();
+    }
 
+    public void insertFragment(){
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
         if (fragment == null){
-            fragment = new ItemFragment();
-            System.out.println("Trying");
+            fragment = getNewFragment();
             fm.beginTransaction()
-                .add(R.id.fragment_container, fragment)
-                .commit();
+                    .add(R.id.fragment_container, fragment)
+                    .commit();
         }
+    }
 
-
-
+    protected Fragment getNewFragment() {
+        return new DetailFragment();
     }
 }
