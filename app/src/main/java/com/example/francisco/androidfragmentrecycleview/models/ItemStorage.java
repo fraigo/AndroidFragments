@@ -19,7 +19,7 @@ public class ItemStorage {
         items = new ArrayList<Item>();
         for (int i=0; i<20; i++){
             Item item=new Item();
-            item.setTitle(String.format("Crime #%02d",i+1));
+            item.setTitle(String.format("Item #%02d",i+1));
             item.setDate(Calendar.getInstance().getTime());
             item.setSolved(i%2==0);
             items.add(item);

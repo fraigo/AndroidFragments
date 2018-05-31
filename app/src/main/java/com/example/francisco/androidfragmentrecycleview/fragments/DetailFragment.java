@@ -13,8 +13,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.example.francisco.androidfragmentrecycleview.activities.ItemListActivity;
 import com.example.francisco.androidfragmentrecycleview.models.Item;
 import com.example.francisco.androidfragmentrecycleview.R;
+import com.example.francisco.androidfragmentrecycleview.models.ItemStorage;
+
+import java.util.UUID;
 
 /**
  * Created by francisco on 2018-05-28.
@@ -31,8 +35,8 @@ public class DetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mItem = new Item();
-
+        UUID uuid= (UUID) getActivity().getIntent().getSerializableExtra(ItemListActivity.ITEM_ID);
+        mItem = ItemStorage.get(getActivity()).getItem(uuid);
     }
 
     @Nullable

@@ -10,7 +10,8 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Title
+" />
 
     <EditText
         android:id="@+id/item_data"
@@ -30,13 +31,13 @@
             android:id="@+id/date_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Date" />
 
         <CheckBox
             android:id="@+id/check_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CheckBox" />
+            android:text="Solved" />
 
 
     </LinearLayout>

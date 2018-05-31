@@ -1,6 +1,8 @@
 package com.example.francisco.androidfragmentrecycleview.fragments;
 
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.francisco.androidfragmentrecycleview.R;
+import com.example.francisco.androidfragmentrecycleview.activities.ItemListActivity;
+import com.example.francisco.androidfragmentrecycleview.activities.MainActivity;
 import com.example.francisco.androidfragmentrecycleview.models.Item;
 import com.example.francisco.androidfragmentrecycleview.models.ItemStorage;
 
@@ -48,30 +53,61 @@ public class ItemFragment extends Fragment {
     private void updateView(){
         ItemStorage storage=ItemStorage.get(getActivity());
         ArrayList<Item> items=storage.getItems();
-        mAdapter = new ItemAdapter(items);
-        mItemRecyclerView.setAdapter(mAdapter);
-
-
+        if (mAdapter==null){
+            mAdapter = new ItemAdapter(items);
+            mItemRecyclerView.setAdapter(mAdapter);
+        }else{
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
-    private class ItemHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateView();
+    }
+
+    private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Item mItem;
         public TextView mTitleTextView, mDateTextView;
-        private CheckBox mSolvedCheckbox;
+        private ImageView mSolvedImage;
 
         public ItemHolder(View itemView) {
             super(itemView);
-            mTitleTextView = itemView.findViewById(R.id.title_text);
+            mTitleTextView = itemView.findViewById(R.id.item_text);
             mDateTextView = itemView.findViewById(R.id.date_text);
-            mSolvedCheckbox = itemView.findViewById(R.id.solved_checkbox);
-
+            mSolvedImage = itemView.findViewById(R.id.solved_image);
+            itemView.setOnClickListener(this);
+            mSolvedImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItem.setSolved(!mItem.isSolved());
+                    if (mItem.isSolved()){
+                        mSolvedImage.setImageResource(android.R.drawable.btn_star_big_on);
+                    }else{
+                        mSolvedImage.setImageResource(android.R.drawable.btn_star_big_off);
+                    }
+                }
+            });
         }
 
         public void bindItem(Item item){
             mItem = item;
             mTitleTextView.setText(item.getTitle());
             mDateTextView.setText(DateFormat.getDateInstance().format(item.getDate()));
-            mSolvedCheckbox.setChecked(item.isSolved());
+            if (item.isSolved()){
+                mSolvedImage.setImageResource(android.R.drawable.btn_star_big_on);
+            }else{
+                mSolvedImage.setImageResource(android.R.drawable.btn_star_big_off);
+            }
+        }
+
+        @Override
+        public void onClick(View view){
+            System.out.println("CLICKED "+mItem.getTitle());
+            //Intent intent = new Intent(getActivity(), MainActivity.class);
+            Intent intent = ItemListActivity.newIntent(getActivity(), mItem.getId());
+            startActivity(intent);
         }
     }
 
