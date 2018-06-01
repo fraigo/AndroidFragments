@@ -26,6 +26,7 @@ import java.util.UUID;
 
 public class DetailFragment extends Fragment {
 
+    private static final String ARG_DATA_ID = "data_id";
     private Item mItem;
     private EditText mItemData;
     private Button mButton;
@@ -35,8 +36,16 @@ public class DetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UUID uuid= (UUID) getActivity().getIntent().getSerializableExtra(ItemListActivity.ITEM_ID);
-        mItem = ItemStorage.get(getActivity()).getItem(uuid);
+        UUID dataId= (UUID) getArguments().getSerializable(ARG_DATA_ID);
+        mItem = ItemStorage.get(getActivity()).getItem(dataId);
+    }
+
+    public static DetailFragment newInstance(UUID dataId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_DATA_ID, dataId);
+        DetailFragment fragment = new DetailFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable

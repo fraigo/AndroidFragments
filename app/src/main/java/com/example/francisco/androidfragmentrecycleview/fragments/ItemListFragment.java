@@ -27,12 +27,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ItemFragment extends Fragment {
+public class ItemListFragment extends Fragment {
 
     private RecyclerView mItemRecyclerView;
     private ItemAdapter mAdapter;
 
-    public ItemFragment() {
+    public ItemListFragment() {
         // Required empty public constructor
     }
 
@@ -104,7 +104,6 @@ public class ItemFragment extends Fragment {
 
         @Override
         public void onClick(View view){
-            System.out.println("CLICKED "+mItem.getTitle());
             //Intent intent = new Intent(getActivity(), MainActivity.class);
             Intent intent = ItemListActivity.newIntent(getActivity(), mItem.getId());
             startActivity(intent);

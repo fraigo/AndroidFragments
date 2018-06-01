@@ -6,13 +6,14 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
 import com.example.francisco.androidfragmentrecycleview.R;
-import com.example.francisco.androidfragmentrecycleview.fragments.ItemFragment;
+import com.example.francisco.androidfragmentrecycleview.fragments.DetailFragment;
+import com.example.francisco.androidfragmentrecycleview.fragments.ItemListFragment;
 
 import java.util.UUID;
 
 public class ItemListActivity extends MainActivity {
 
-    public static final String ITEM_ID = "item_id";
+    private static final String ITEM_ID = "data_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +23,8 @@ public class ItemListActivity extends MainActivity {
 
     @Override
     protected Fragment getNewFragment() {
-        return new ItemFragment();
+        return new ItemListFragment();
     }
 
-    public static Intent newIntent(Context packageContext, UUID uuid){
-        Intent intent = new Intent(packageContext, MainActivity.class);
-        intent.putExtra(ITEM_ID, uuid);
-        return intent;
-    }
+
 }
