@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.francisco.androidfragmentrecycleview.R;
 import com.example.francisco.androidfragmentrecycleview.activities.ItemListActivity;
+import com.example.francisco.androidfragmentrecycleview.activities.ItemPagerActivity;
 import com.example.francisco.androidfragmentrecycleview.activities.MainActivity;
 import com.example.francisco.androidfragmentrecycleview.models.Item;
 import com.example.francisco.androidfragmentrecycleview.models.ItemStorage;
@@ -104,8 +105,8 @@ public class ItemListFragment extends Fragment {
 
         @Override
         public void onClick(View view){
-            //Intent intent = new Intent(getActivity(), MainActivity.class);
-            Intent intent = ItemListActivity.newIntent(getActivity(), mItem.getId());
+            //Intent intent = ItemListActivity.newIntent(getActivity(), mItem.getId());
+            Intent intent = ItemPagerActivity.newIntent(getActivity(),mItem.getId());
             startActivity(intent);
         }
     }
