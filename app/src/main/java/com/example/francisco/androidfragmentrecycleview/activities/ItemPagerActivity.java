@@ -8,10 +8,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.francisco.androidfragmentrecycleview.R;
-import com.example.francisco.androidfragmentrecycleview.fragments.DetailFragment;
+import com.example.francisco.androidfragmentrecycleview.fragments.ItemFragment;
 import com.example.francisco.androidfragmentrecycleview.models.Item;
 import com.example.francisco.androidfragmentrecycleview.models.ItemStorage;
 
@@ -39,7 +38,7 @@ public class ItemPagerActivity extends FragmentActivity {
             @Override
             public Fragment getItem(int position) {
                 Item crime = mItems.get(position);
-                return DetailFragment.newInstance(crime.getId());
+                return ItemFragment.newInstance(crime.getId());
             }
             @Override
             public int getCount() {

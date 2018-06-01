@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 
-import com.example.francisco.androidfragmentrecycleview.fragments.DetailFragment;
+import com.example.francisco.androidfragmentrecycleview.fragments.ItemFragment;
 import com.example.francisco.androidfragmentrecycleview.R;
 
 import java.util.UUID;
@@ -42,9 +42,9 @@ public class MainActivity extends FragmentActivity {
     }
 
     protected Fragment getNewFragment() {
-        //return new DetailFragment();
+        //return new ItemFragment();
         UUID dataId = (UUID) getIntent().getSerializableExtra(ITEM_ID);
-        return DetailFragment.newInstance(dataId);
+        return ItemFragment.newInstance(dataId);
 
     }
 }
