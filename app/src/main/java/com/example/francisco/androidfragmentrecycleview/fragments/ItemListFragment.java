@@ -2,6 +2,7 @@ package com.example.francisco.androidfragmentrecycleview.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,8 @@ import com.example.francisco.androidfragmentrecycleview.models.ItemStorage;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -71,13 +74,14 @@ public class ItemListFragment extends Fragment {
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Item mItem;
         public TextView mTitleTextView, mDateTextView;
-        private ImageView mSolvedImage;
+        private ImageView mSolvedImage, mDeleteImage;
 
-        public ItemHolder(View itemView) {
+        public ItemHolder(final View itemView) {
             super(itemView);
             mTitleTextView = itemView.findViewById(R.id.item_text);
             mDateTextView = itemView.findViewById(R.id.date_text);
             mSolvedImage = itemView.findViewById(R.id.solved_image);
+            mDeleteImage = itemView.findViewById(R.id.delete_icon);
             itemView.setOnClickListener(this);
             mSolvedImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,6 +94,37 @@ public class ItemListFragment extends Fragment {
                     }
                 }
             });
+            mDeleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final int col=itemView.getDrawingCacheBackgroundColor();
+                    itemView.setBackgroundColor(Color.LTGRAY);
+                    deleteItem();
+                    itemView.setBackgroundColor(col);
+                    /*
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            ItemListFragment.this.getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    deleteItem();
+                                    itemView.setBackgroundColor(col);
+                                }
+                            });
+                        }
+                    }, 300);
+                    */
+                }
+            });
+        }
+
+        public void deleteItem(){
+            ItemStorage storage = ItemStorage.get(getActivity());
+            ArrayList<Item> items = storage.getItems();
+            int pos = items.indexOf(mItem);
+            items.remove(pos);
+            mAdapter.notifyItemRemoved(pos);
         }
 
         public void bindItem(Item item){

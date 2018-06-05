@@ -17,8 +17,11 @@ public class Item {
     private boolean mSolved;
 
     public Item(){
-        // Generate UUID
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public Item(UUID uuid){
+        mId = uuid;
         mTitle = "";
         mDate = Calendar.getInstance().getTime();
         mSolved = true;

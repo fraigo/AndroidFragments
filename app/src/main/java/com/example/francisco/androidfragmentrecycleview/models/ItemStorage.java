@@ -1,6 +1,12 @@
 package com.example.francisco.androidfragmentrecycleview.models;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.francisco.androidfragmentrecycleview.database.DbHelper;
+import com.example.francisco.androidfragmentrecycleview.database.DbSchema;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,8 +20,13 @@ public class ItemStorage {
 
     static ItemStorage sItemStorage;
     private ArrayList<Item> items;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
+
 
     private ItemStorage(Context context){
+        mContext = context.getApplicationContext();
+        mDatabase = new DbHelper(mContext).getWritableDatabase();
         items = new ArrayList<Item>();
         for (int i=0; i<20; i++){
             Item item=new Item();
@@ -44,5 +55,40 @@ public class ItemStorage {
             }
         }
         return null;
+    }
+
+    private static ContentValues getContentValues(Item item) {
+        ContentValues values = new ContentValues();
+        values.put(DbSchema.ItemTable.Columns.UUID, item.getId().toString());
+        values.put(DbSchema.ItemTable.Columns.TITLE, item.getTitle());
+        values.put(DbSchema.ItemTable.Columns.DATE, item.getDate().getTime());
+        values.put(DbSchema.ItemTable.Columns.SOLVED, item.isSolved() ? 1 : 0);
+        return values;
+    }
+
+    public void addItem(Item item){
+        ContentValues values=getContentValues(item);
+        mDatabase.insert(DbSchema.ItemTable.NAME, null, values);
+    }
+
+    public void updateItem(Item item) {
+        String uuidString = item.getId().toString();
+        ContentValues values = getContentValues(item);
+        mDatabase.update(DbSchema.ItemTable.NAME, values,
+                DbSchema.ItemTable.Columns.UUID + " = ?",
+                new String[] { uuidString });
+    }
+
+    private Cursor queryItems(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(
+                DbSchema.ItemTable.NAME,
+                null, // Columns - null selects all columns
+                whereClause,
+                whereArgs,
+                null, // groupBy
+                null, // having
+                null // orderBy
+        );
+        return cursor;
     }
 }

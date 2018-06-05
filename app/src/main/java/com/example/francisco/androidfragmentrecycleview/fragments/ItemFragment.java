@@ -121,5 +121,12 @@ public class ItemFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        ItemStorage.get(getActivity())
+                .updateItem(mItem);
+    }
+
 
 }
